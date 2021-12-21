@@ -14,7 +14,7 @@ hostname=$(hostname)
 
 if [ -f /etc/debian_version ]; then
     OS=Debian  # XXX or Ubuntu??
-    sudo apt-get install -y curl python3
+    sudo apt-get install -y curl python
 
 elif [ -f /etc/redhat-release ]; then
     OS=RHEL
@@ -33,7 +33,7 @@ curl -s -X POST -H "Content-Type: application/json" -d "{
 	\"honeypot\": \"$honeypot\"
 }" $server_url/api/sensor/ > /tmp/deploy.json
 
-uuid=$(python -c 'import json;obj=json.load("/tmp/deploy.json");print (obj["uuid"])')
+uuid=$(python -c 'import json;obj=json.load(file("/tmp/deploy.json"));print obj["uuid"]')
 
 if [ -z "$uuid" ]
     then
